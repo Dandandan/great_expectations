@@ -109,8 +109,6 @@ class MetaSparkDFDataset(Dataset):
 
             col_df = self.spark_df.select(col(eval_col))  # pyspark.sql.DataFrame
 
-            # a couple of tests indicate that caching here helps performance
-            col_df.persist()
             element_count = self.get_row_count()
 
             # FIXME temporary fix for missing/ignored value
@@ -250,8 +248,6 @@ class MetaSparkDFDataset(Dataset):
                 "__row", monotonically_increasing_id()
             )  # pyspark.sql.DataFrame
 
-            # a couple of tests indicate that caching here helps performance
-            cols_df.cache()
             element_count = self.get_row_count()
 
             if ignore_row_if == "both_values_are_missing":
@@ -411,8 +407,6 @@ class MetaSparkDFDataset(Dataset):
 
             temp_df = self.spark_df.select(*eval_cols)  # pyspark.sql.DataFrame
 
-            # a couple of tests indicate that caching here helps performance
-            temp_df.cache()
             element_count = self.get_row_count()
 
             if ignore_row_if == "all_values_are_missing":
